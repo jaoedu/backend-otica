@@ -33,17 +33,18 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'core',
-    'products',
-    'orders',
-    'users',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "drf_spectacular",
+    "core",
+    "products",
+    "orders",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,44 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Ótica API",
+    "DESCRIPTION": (
+        "API do sistema Ótica (v1). "
+        "Inclui autenticação JWT, catálogo de produtos e pedidos."
+    ),
+    "VERSION": "1.0.0",
+    # UI e schema
+    "SERVE_INCLUDE_SCHEMA": False,
+    # deixa docs públicas (mesmo com API protegida)
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    # melhora como o Swagger separa request/response
+    "COMPONENT_SPLIT_REQUEST": True,
+    # tags globais (aparece organizado no Swagger)
+    "TAGS": [
+        {
+            "name": "Health",
+            "description": "Status do serviço e checks de disponibilidade.",
+        },
+        {
+            "name": "Auth",
+            "description": "Cadastro, login JWT, refresh e dados do usuário logado.",
+        },
+        {"name": "Products", "description": "Operações de catálogo de produtos."},
+        {"name": "Orders", "description": "Operações de pedidos e itens do pedido."},
+        {"name": "Users", "description": "Recursos relacionados ao usuário."},
+    ],
+}
+
+AUTH_USER_MODEL = "users.User"
