@@ -33,11 +33,19 @@ cd backend-otica
 ```
 
 2️⃣ Subir containers
+```bash
 docker compose up -d --build
+```
 3️⃣ Rodar migrations
+
+```bash
 docker compose exec web python manage.py migrate
+```
 4️⃣ Criar superusuário
+```bash
+
 docker compose exec web python manage.py createsuperuser
+```
 🔎 Endpoints Principais
 Método Rota Descrição
 GET /api/v1/health/ Verifica status da API
@@ -69,13 +77,18 @@ Header obrigatório para rotas protegidas:
 
 Authorization: Bearer SEU_ACCESS_TOKEN
 🐳 Docker
+
 Desenvolvimento
+```bash
+
 docker compose up -d
 Rebuild
 docker compose up -d --build
 Resetar banco (⚠ apaga dados)
 docker compose down -v
 docker compose up -d --build
+```
+
 🌍 Preparação para Produção
 
 O projeto já está preparado para:
