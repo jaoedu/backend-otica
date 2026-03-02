@@ -28,7 +28,7 @@ Projeto estruturado para:
 ## 1️⃣ Clonar o projeto
 
 ```bash
-git clone https://github.com/joaoedu/backend-otica.git
+git clone https://github.com/jaoedu/backend-otica.git
 cd backend-otica
 ```
 
