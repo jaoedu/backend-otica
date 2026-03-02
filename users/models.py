@@ -3,6 +3,11 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # espaço pra futuro: telefone, cpf, etc.
-    # phone = models.CharField(max_length=20, blank=True)
-    pass
+    username = None  # remove username
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []  # remove obrigatoriedade de username
+
+    def __str__(self):
+        return self.email

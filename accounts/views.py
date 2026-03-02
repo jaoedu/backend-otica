@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
+from .jwt import EmailTokenObtainPairSerializer
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -53,6 +54,8 @@ class RegisterView(APIView):
 
 
 class LoginView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
+
     @extend_schema(
         tags=["Auth"],
         summary="Login (JWT)",
@@ -64,7 +67,7 @@ class LoginView(TokenObtainPairView):
         examples=[
             OpenApiExample(
                 "Exemplo de login",
-                value={"username": "mota", "password": "123456"},
+                value={"email": "mota@email.com", "password": "123456"},
                 request_only=True,
             )
         ],
