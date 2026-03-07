@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "core",
     "products",
     "orders",
-    "users",
     "accounts",
 ]
 
@@ -170,4 +169,4 @@ SPECTACULAR_SETTINGS = {
     ],
 }
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "accounts.User"

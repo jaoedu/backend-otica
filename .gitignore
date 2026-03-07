@@ -1,4 +1,5 @@
 # Ignore virtual environments
+media/
 .venv/
 env/
 .env/

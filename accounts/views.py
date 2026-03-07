@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
 from .serializers import RegisterSerializer
-from users.serializers import MeSerializer
+from accounts.serializers import MeSerializer
 
 
 class RegisterView(APIView):

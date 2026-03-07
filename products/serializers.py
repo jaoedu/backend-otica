@@ -35,7 +35,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     image_url = serializers.SerializerMethodField()
     final_price = serializers.SerializerMethodField()
-    is_on_sale = serializers.BooleanField(source="is_on_sale", read_only=True)
+    is_on_sale = serializers.BooleanField()
 
     class Meta:
         model = Product
@@ -71,7 +71,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     gallery = ProductImageSerializer(many=True, read_only=True)
     attributes = ProductAttributeSerializer(many=True, read_only=True)
     final_price = serializers.SerializerMethodField()
-    is_on_sale = serializers.BooleanField(source="is_on_sale", read_only=True)
+    is_on_sale = serializers.BooleanField()
 
     class Meta:
         model = Product
