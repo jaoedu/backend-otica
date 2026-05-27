@@ -2,13 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
+from rest_framework import viewsets
 from .jwt import EmailTokenObtainPairSerializer
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from drf_spectacular.utils import extend_schema, OpenApiExample
 
-from .serializers import RegisterSerializer
+from .models import Address
+from .serializers import AddressSerializer, ProfileSerializer, RegisterSerializer
 from accounts.serializers import MeSerializer
 
 
@@ -38,7 +40,7 @@ class RegisterView(APIView):
             OpenApiExample(
                 "Exemplo de cadastro",
                 value={
-                    "username": "mota",
+                    "name": "Joao Mota",
                     "email": "mota@email.com",
                     "password": "123456",
                 },
@@ -108,3 +110,27 @@ class MeView(APIView):
     )
     def get(self, request):
         return Response(MeSerializer(request.user).data)
+
+    @extend_schema(
+        tags=["Auth"],
+        summary="Atualizar perfil",
+        request=ProfileSerializer,
+        responses={200: MeSerializer},
+    )
+    def patch(self, request):
+        serializer = ProfileSerializer(
+            request.user,
+            data=request.data,
+            partial=True,
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(MeSerializer(request.user).data)
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)

@@ -14,6 +14,20 @@ class Order(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
+    address_label = models.CharField(max_length=60, default="")
+    address_zipcode = models.CharField(max_length=20, default="")
+    address_street = models.CharField(max_length=160, default="")
+    address_number = models.CharField(max_length=30, default="")
+    address_complement = models.CharField(max_length=120, blank=True, default="")
+    address_neighborhood = models.CharField(max_length=120, default="")
+    address_city = models.CharField(max_length=120, default="")
+    address_state = models.CharField(max_length=2, default="")
+    prescription_image = models.ImageField(
+        upload_to="orders/prescriptions/",
+        blank=True,
+        null=True,
+    )
+    prescription_notes = models.TextField(blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property

@@ -8,6 +8,12 @@ class CheckoutItemSerializer(serializers.Serializer):
 
 class CheckoutSerializer(serializers.Serializer):
     items = CheckoutItemSerializer(many=True)
+    address_id = serializers.IntegerField()
+    prescription_notes = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=2000,
+    )
 
     def validate_items(self, items):
         if not items:
